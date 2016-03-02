@@ -28,11 +28,10 @@ class Graph:
 #   None    None    None    None
 
 sample_rules = [
-    ['None', 1, 'None', 'None'],
-    ['Wall', 'None', 'None', 'None'],
-    ['None', 'Open', 'None', 'None'],
-    ['None', 'None', 1, 'None'],
-    ['None', 'None', 'None', 'None']
+    ['None', 'Wall', 'None', 'None', 'None'],
+    [1, 'None', 'Open', 'None', 'None'],
+    ['None', 'None', 'None', 1, 'None'],
+    ['Start', 'None', 'None', 'None', 'None']
 ]
 
-sample_graph = Graph([4, 5], sample_rules, [0, 3])
+sample_graph = Graph([4, 5], sample_rules, [3, 0])
