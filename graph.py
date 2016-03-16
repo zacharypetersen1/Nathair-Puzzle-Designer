@@ -98,37 +98,38 @@ class Graph:
         stack = [(self.start, None)]
         path_list = []
         while stack:
-            while stack[-1][1] == path[-1] or len(path) == 1:         # if the next position is adjacent to the head
+            while stack[-1][1] == path[-1] or (len(path) == 1 and path[-1] == self.start):         # if the next position is adjacent to the head
                 v = stack.pop()     # get the next snake position
                 if len(path) != 1 or v[0] != self.start:
                     path.append(v[0])      # append it to the path
+                    if path[-1] == self.start:
+                        break
                 i = 6
                 while i >= 0:       # get and the next three adjacent positions
                     adj = [self.getAdjacent(v[0], i), None]
                     if adj[0] and (adj[0] not in path or (adj[0] == self.start and len(path) > 1)):
                         adj[1] = v[0]          # store parent
                         stack.append(adj)      # if not walls or OOB add them to the stack
-                    elif adj[0] == self.start:
-                        print('shrek')
                     i -= 2
                 if len(stack) == 0:
                     break
             #print(path[-1])
             if path[-1] == self.start:
-                path_list.append(path)                                      # if not and the head is the start save the list
+                path_list.append(path)                                                             # if not and the head is the start save the list
             if path:
-                path.pop()                                                      # pop off the head of the path
+                p = path.pop()                                                                     # pop off the head of the path
         #for p in path_list:
             #p = convertToDir(p)
         return path_list
 
 
 # Test graph
-#   None    TP 1    None    Start
-#   Wall    None    None    None
-#   None    Open    None    None
-#   None    None    TP 1    None
-#   None    None    None    None
+#     0       1       2       3
+# 0   None    TP 1    None    Start
+# 1   Wall    None    None    None
+# 2   None    Open    None    None
+# 3   None    None    TP 1    None
+# 4   None    None    None    None
 
 sample_rules = [
     [ 'None', 'Wall', 'None', 'None', 'None'],
@@ -139,8 +140,22 @@ sample_rules = [
 
 sample_graph = Graph([4, 5], sample_rules, [3, 0])
 
-#adjacent = sample_graph.getAdjacent([1,4],6)
+
+# Other Test graph
+#     0       1   
+# 0   None    Start
+# 1   Open    None
+
+
+more_sample_rules = [
+    [ 'None', 'None'],
+    ['Start', 'None']
+]
+
+more_sample_graph = Graph([2,2], more_sample_rules, [1,0])
+
+#adjacent = sample_graph.getAdjacent([2,0],4)
 #print(adjacent)
 
-#paths = sample_graph.findPathsDFS()
-#print(paths)
+paths = more_sample_graph.findPathsDFS()
+print(paths)
